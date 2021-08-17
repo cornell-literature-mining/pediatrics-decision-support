@@ -1,5 +1,5 @@
 # pediatrics-decision-support
-The codes in "backend" folder need corresponding datasets and model weights. One can download these datasets and model weights from https://wcm.box.com/s/xxairqjh697wlf0l0tcd9oqkj5fr1dlj. Jst put them into the "backend" folder and the codes will work. 
+The codes in "backend" folder need corresponding datasets and model weights. One can download these datasets and model weights from https://wcm.box.com/s/xxairqjh697wlf0l0tcd9oqkj5fr1dlj. Just put them into the "backend" folder and the codes will work. 
 
 In the "backend" folder, there are four python files. 
 1. "Retrieval.py" corresponds to the retreival module. It will select the most relevant abstracts according to the query.
