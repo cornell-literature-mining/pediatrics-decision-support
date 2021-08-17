@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}
+    <link rel="stylesheet" href={{ url_for('static', filename='base.css') }}>
+    {% endblock %}
+</head>
+
+<body>
+    {% block content %}
+    <button type="button" class="sidebar_button mdc-icon-button material-icons" onclick="openNav()">menu</button>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    </div>  
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "300px";
+        }
+
+        /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+  </script>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,56 @@
+.population,
+.intervention{
+display: flex;
+justify-content: center;
+margin: 20px;
+width: 300px;
+}
+
+#homeIcon {
+font-size:60px;
+display: flex;
+justify-content: center;
+}
+
+.searchfield {
+position: absolute;
+top: 40%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.button-container {
+display: flex;
+justify-content: flex;
+width: 300px;
+margin: auto;
+}
+
+.mdc-button__label {
+color: black;
+}
+
+.button-container button {
+margin: 3px;
+}
+
+body {
+display: flex;
+height: 100vh;
+}
+
+.mdc-drawer-app-content {
+flex: auto;
+overflow: auto;
+position: relative;
+}
+
+.main-content {
+overflow: auto;
+height: 100%;
+}
+
+.app-bar {
+position: absolute;
+}
+

@@ -1,0 +1,36 @@
+
+.searchField, .chips {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+    padding-top: 45px;
+}
+
+.population, .intervention {
+    margin: 35px 20px;
+    width: 450px;
+}
+
+#homeIcon {
+    font-size:60px;
+    align-self:flex-start;
+    padding-top: 30px;
+}
+
+.mdc-card{
+    margin: 30px;
+    width: 90%;
+    height: 225px;
+}
+
+.reviewArticles {
+    padding-top: 160px;
+    position: relative;
+    padding-left: 50px;
+}
+
+.menuButton {
+    padding-top: 45px;
+}

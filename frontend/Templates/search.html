@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLR Search</title>
+
+    {{ super() }}
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel='stylesheet' href={{ url_for('static',filename='search.css') }}>
+    {% endblock %}
+</head>
+<body>
+  {% block content %}
+
+    <header class=" mdc-top-app-bar mdc-top-app-bar--prominent mdc-top-app-bar--dense ">
+        <div class="mdc-top-app-bar__row">
+          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <form class= 'searchField' action='search' method='POST'>
+                <button type='button' class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon--unbounded menuButton" onclick="openNav()">menu</button> 
+                <div id="mySidebar" class="sidebar">
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+              </div>  
+                <a href='/'><i class="material-icons mdc-theme--on-primary" id= "homeIcon">biotech</i>
+                </a>
+                <label class="mdc-text-field mdc-text-field--filled population">
+                    <span class="mdc-text-field__ripple"></span>
+                    <input type="text" class="mdc-text-field__input" aria-labelledby="population-label" name="username">
+                    <span class="mdc-floating-label" id="population-label">Population of interest</span>
+                    <span class="mdc-line-ripple"></span>
+                </label>
+                <label class="mdc-text-field mdc-text-field--filled intervention">
+                    <span class="mdc-text-field__ripple"></span>
+                    <input type="text" class="mdc-text-field__input" aria-labelledby="intervention-label" name="username">
+                    <span class="mdc-floating-label" id="intervention-label">Intervention and outcomes of interest</span>
+                    <span class="mdc-line-ripple"></span>
+                </label>
+              <div class='button-container'>
+                <button type="submit" class="mdc-button submit">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mdc-theme--on-primary" >
+                  Search
+                  </span>
+                </button>
+              </div>
+                </form>
+          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+          </section>
+        </div>
+            <section class='chips'>
+                <div class="mdc-chip-set" role="grid">
+                    <div class="mdc-chip" role="row">
+                      <div class="mdc-chip__ripple"></div>
+                      <span role="gridcell">
+                        <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                          <span class="mdc-chip__text">Chip One</span>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="mdc-chip" role="row">
+                      <div class="mdc-chip__ripple"></div>
+                      <span role="gridcell">
+                        <span role="button" tabindex="-1" class="mdc-chip__primary-action">
+                          <span class="mdc-chip__text">Chip Two</span>
+                        </span>
+                      </span>
+                      </div>
+                    <div class="mdc-chip" role="row">
+                      <div class="mdc-chip__ripple"></div>
+                      <span role="gridcell">
+                        <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                          <span class="mdc-chip__text">Chip Three</span>
+                        </span>
+                      </span>
+                    </div>
+                      <div class="mdc-chip" role="row">
+                        <div class="mdc-chip__ripple"></div>
+                        <span role="gridcell">
+                          <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                            <span class="mdc-chip__text">Chip Four</span>
+                          </span>
+                        </span>
+                      </div>
+                      </div>
+            </section>
+      </header>
+
+    <div class='reviewArticles mdc-top-app-bar--dense-prominent-fixed-adjust'>
+      <div>
+        <span>Review Articles</span>
+      </div>
+
+      <div class="mdc-card mdc-card--outlined">
+        <div class='mdc-card__media-content'>
+          <h2 class='mdc-theme--on-surface'>Prolonged Emergency Department Length of Stay for US Pediatric Mental Health Visits (2005-2015) </h2>
+          <span> Katherine A. Nash, Bonnie T. Zima, Craig Rothenberg, Jennifer Hoffmann, Claudia Moreno, Marjorie S. Rosenthal and Arjun Venkatesh</span>
+          <div> Pediatrics, May 2021</div>
+          <div> PICO </div>
+        </div>
+      </div>
+
+     <div class="mdc-card mdc-card--outlined">
+      <h2 class='mdc-theme--on-surface'>Compare and contrast: pediatric cancer versus adult malignancies</h2>
+      <span> Patricia Kattner, Hannah Strobel, Nika Khoshnevis, Michael Grunert, Stephan Bartholomae, Maximilian Pruss, Rahel Fitzel, Marc-Eric Halatsch, Katharina Schilberg, Markus D Siegelin, Aurelia Peraud, Georg Karpel-Massler, Mike-Andrew Westhoff, Klaus-Michael Debatin</span>
+      <div> Cancer Metastasis Rev., 2019 Dec</div>
+      <div> PICO </div>
+      </div>
+    </div>
+
+    <script>
+      function openNav() {
+          document.getElementById("mySidebar").style.width = "300px";
+      }
+
+      /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+      function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+      }
+</script>
+
+{% endblock %}
+</body>
+</html>
