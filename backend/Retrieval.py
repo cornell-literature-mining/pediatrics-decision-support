@@ -59,7 +59,7 @@ def train(dataset, label, model, loss_fn, optimizer, device, batch_size, num_epo
         torch.save(model.state_dict(), "model_train_{}.pth".format(epoch))
         print("Saved PyTorch Model State to model_train_{}.pth".format(epoch))
 
-def test(dataset, label, loss_fn, model, device, batch_size=4):
+def test_with_label(dataset, label, loss_fn, model, device, batch_size=4):
     size = len(label)
     model.eval()
     test_loss, correct = 0, 0
@@ -93,8 +93,33 @@ def test(dataset, label, loss_fn, model, device, batch_size=4):
     selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==0]
     return pred_label, selected_abstracts
 
+def test(dataset, model, batch_size=4):
+    size = len(dataset)
+    model.eval()
+    test_loss, correct = 0, 0
+    batch_num = int(size / batch_size)  # discard the decimals
+    pred_label = []
+    with torch.no_grad():
+        for batch_index in range(batch_num):  # loop over the dataset batch by batch
+            start = batch_index * batch_size
+            X = dataset[start:(start + batch_size)]
 
-if __name__ == '__main__':
+            pred = model(X)
+            pred_label.append(pred.argmax(1).cpu().numpy())
+
+        if batch_index * batch_size < size:  # still some left
+            start = (batch_index + 1) * batch_size
+            X = dataset[start:]
+
+            pred = model(X)
+            pred_label.append(pred.argmax(1).cpu().numpy())
+
+    pred_label = np.concatenate(np.array(pred_label))
+    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==0]
+    return pred_label, selected_abstracts
+
+
+def main():
     time_start = time.time()
     batch_size = 5  # 16
     num_epochs = 5
@@ -109,6 +134,10 @@ if __name__ == '__main__':
 
     with open('data_balance_test.json', 'r') as json_file:  # testing data
         data_dict_test = json.load(json_file)
+
+    # [query, abstract1] 1
+    # [query, abstract2] 0
+    # abstracts " bla bla bla "
 
     # train_data = data_dict_train['train_data']
     # train_label = data_dict_train['train_label']
@@ -138,9 +167,14 @@ if __name__ == '__main__':
     model.load_state_dict(torch.load("model_train.pth"))
 
     # test model on testing data
-    pred_label, selected_abstracts = test(test_data, test_label, loss_fn, model, device, batch_size)
+    # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)
+    pred_label, selected_abstracts = test(test_data, model)
 
     time_end = time.time()
     print('time cost', (time_end - time_start)/60, 'min')
 
     print('done!')
+    return selected_abstracts
+
+if __name__ == '__main__':
+    selected_abstracts = main()
