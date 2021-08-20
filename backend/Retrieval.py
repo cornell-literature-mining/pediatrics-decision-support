@@ -119,10 +119,10 @@ def test(dataset, model, batch_size=4):
     return pred_label, selected_abstracts
 
 
-def main():
-    time_start = time.time()
-    batch_size = 5  # 16
-    num_epochs = 5
+def retrieval(test_data):
+    # time_start = time.time()
+    # batch_size = 5  # 16
+    # num_epochs = 5
     # Get cpu or gpu device for training.
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
@@ -132,8 +132,8 @@ def main():
     # with open('data_balance_train.json', 'r') as json_file:  # training data
     #     data_dict_train = json.load(json_file)
 
-    with open('data_balance_test.json', 'r') as json_file:  # testing data
-        data_dict_test = json.load(json_file)
+    # with open('data_balance_test.json', 'r') as json_file:  # testing data
+    #     data_dict_test = json.load(json_file)
 
     # [query, abstract1] 1
     # [query, abstract2] 0
@@ -142,15 +142,15 @@ def main():
     # train_data = data_dict_train['train_data']
     # train_label = data_dict_train['train_label']
 
-    test_data = data_dict_test['test_data']
-    test_label = data_dict_test['test_label']
+    # test_data = data_dict_test['test_data']
+    # test_label = data_dict_test['test_label']
 
     # Initialize the model
     model = NeuralNetwork(device).to(device)
 
     # define loss function and optimizer
-    loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
+    # loss_fn = nn.CrossEntropyLoss()
+    # optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
     # optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     # train the model
@@ -170,11 +170,17 @@ def main():
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)
     pred_label, selected_abstracts = test(test_data, model)
 
-    time_end = time.time()
-    print('time cost', (time_end - time_start)/60, 'min')
+    # time_end = time.time()
+    # print('time cost', (time_end - time_start)/60, 'min')
 
-    print('done!')
+    # print('done!')
     return selected_abstracts
 
 if __name__ == '__main__':
-    selected_abstracts = main()
+    # load data where test_data is in the list of [query abstract]
+    with open('data_balance_test.json', 'r') as json_file:  # testing data
+        data_dict_test = json.load(json_file)
+    test_data = data_dict_test['test_data']
+
+    # call the retrieval function with input "test_data" and you can get the selected abstracts
+    selected_abstracts = retrieval(test_data)
