@@ -177,7 +177,7 @@ def retrieval(test_data):
     return selected_abstracts
 
 if __name__ == '__main__':
-    # load data where test_data is in the list of [query abstract]
+    # load data where test_data is the list of [query, abstract]
     with open('data_balance_test.json', 'r') as json_file:  # testing data
         data_dict_test = json.load(json_file)
     test_data = data_dict_test['test_data']
