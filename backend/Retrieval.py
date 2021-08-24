@@ -8,6 +8,7 @@ import torch.nn.functional as F
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from torch.utils.data import DataLoader
 import numpy as np
+from . import File_loading as fl
 
 
 # tokenizer = AutoTokenizer.from_pretrained("emilyalsentzer/Bio_ClinicalBERT")
@@ -164,7 +165,7 @@ def retrieval(test_data):
     # load saved model parameters trained by the training data from the train reviews.
     # "model_test.pth" is trained from the training data from testing reviews
     # "model_train.pth" is trained from the training data from training reviews
-    model.load_state_dict(torch.load("model_train.pth"))
+    model.load_state_dict(fl.torch_load("model_train.pth"))
 
     # test model on testing data
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)

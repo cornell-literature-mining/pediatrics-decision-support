@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, url_for
 from backend import Retrieve_PIO as rPIO
+import os
 
-app = Flask(__name__)
+template_dir = os.path.abspath('frontend/templates')
+app = Flask(__name__, template_folder=template_dir)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
