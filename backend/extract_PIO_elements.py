@@ -62,9 +62,8 @@ def extract_PIO(abstract):
     tag_values = ['0', 'Pop', 'Int', 'Out', 'PAD']
     tag2idx = {'0': 0, 'Pop': 1, 'Int': 2, 'Out': 3, 'PAD': 4}
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    n_gpu = torch.cuda.device_count()
-    torch.cuda.get_device_name(0)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    print("Using {} device".format(device))
 
     model = torch.load("model_PIO_dropout_5epoch_entire.pth")
     model.eval()  # this is important
