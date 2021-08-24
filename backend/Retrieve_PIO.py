@@ -29,10 +29,10 @@ def get_PIO(population, others):
     # Assumed format: lsit of "[Content (string), P list (list), I list (list), O list (list)]
 
     # Commenting out as it doesn't work on my PC:
-    #retrieval_input = create_ret_input(population, others)
-    #selected_abstracts = ret.retrieval(retrieval_input)
-    #output_PIO = PIO(selected_abstracts)
+    retrieval_input = create_ret_input(population, others)
+    selected_abstracts = ret.retrieval(retrieval_input)
+    output_PIO = PIO(selected_abstracts)
 
     # Temp output - delete once the NVIDIA GPU problem is sorted out
-    output_PIO = [["Humans need food and water in order to stay healthy.", ["Humans"], ["Food", "Water"], ["Healthy"]], ["Cats need pets in order to stay happy. This is a different content.", ["Cats"], ["Pets"], ["Happy"]]]
+    #output_PIO = [["Humans need food and water in order to stay healthy.", ["Humans"], ["Food", "Water"], ["Healthy"]], ["Cats need pets in order to stay happy. This is a different content.", ["Cats"], ["Pets"], ["Happy"]]]
     return output_PIO
