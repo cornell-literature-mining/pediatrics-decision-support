@@ -10,7 +10,4 @@ def Open(file_name, mode):
     return open(os.path.join(__location__, file_name), mode)
 
 def torch_load(file_name):
-    if not torch.cuda.is_available():
-        return torch.load(os.path.join(__location__, file_name), map_location=torch.device('cpu'))
-    else:
-        return torch.load(os.path.join(__location__, file_name))
+    return torch.load(os.path.join(__location__, file_name))

@@ -165,7 +165,7 @@ def retrieval(test_data):
     # load saved model parameters trained by the training data from the train reviews.
     # "model_test.pth" is trained from the training data from testing reviews
     # "model_train.pth" is trained from the training data from training reviews
-    model.load_state_dict(fl.torch_load("model_train.pth"))
+    model.load_state_dict(torch.load("./backend/model_train.pth",  map_location=torch.device(device)))
 
     # test model on testing data
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)

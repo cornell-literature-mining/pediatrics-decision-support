@@ -8,6 +8,7 @@ import pickle
 import json
 from itertools import groupby
 import Levenshtein
+from . import File_loading as fl
 
 
 def simple(corpus, distance):  # remove the too similar strings in a list
@@ -65,7 +66,7 @@ def extract_PIO(abstract):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
 
-    model = torch.load("model_PIO_dropout_5epoch_entire.pth")
+    model = torch.load("./backend/model_PIO_dropout_5epoch_entire.pth",  map_location=torch.device(device))
     model.eval()  # this is important
     model = model.to(device)  # this is important
 

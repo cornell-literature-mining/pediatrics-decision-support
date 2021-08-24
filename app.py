@@ -21,10 +21,10 @@ def convert_PIO(output):
     for source in output:
         target = {}
         target['Title'] = "Abstract title TBA"
-        target['Content'] = source[0]
-        target['Population'] = source[1]
-        target['Intervention'] = source[2]
-        target['Outcome'] = source[3]
+        target['Content'] = "Content TBA"# source[0]
+        target['Population'] = source[0]
+        target['Intervention'] = source[1]
+        target['Outcome'] = source[2]
         result.append(target)
     return result
 
