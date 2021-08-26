@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}
     <link rel="stylesheet" href={{ url_for('static', filename='base.css') }}>
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     {% endblock %}
 </head>
 
-<body class="mdc-typography" style="margin-left: 0px;margin-top: 0px;">
-    {% block content %}
+{% block content %}
+<body>
     <button type="button" class="sidebar_button mdc-icon-button material-icons" onclick="openNav()">menu</button>
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -25,7 +29,8 @@
         function closeNav() {
             document.getElementById("mySidebar").style.width = "0";
         }
-  </script>
-    {% endblock %}
+    </script>
 </body>
+{% endblock %}
+
 </html>

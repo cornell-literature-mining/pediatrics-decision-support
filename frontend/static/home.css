@@ -3,7 +3,7 @@
 display: flex;
 justify-content: center;
 margin: 20px;
-width: 300px;
+width: 450px;
 }
 
 #homeIcon {
@@ -36,7 +36,6 @@ margin: 3px;
 
 body {
 display: flex;
-height: 100vh;
 }
 
 .mdc-drawer-app-content {
@@ -53,4 +52,3 @@ height: 100%;
 .app-bar {
 position: absolute;
 }
-

@@ -1,3 +1,5 @@
+@import "@material/textfield/mdc-text-field";
+
 .searchField, .chips {
     display: flex;
     justify-content: center;
@@ -59,6 +61,10 @@
 }
 
 /* Colors */
+
+.lightBGColor {
+    background-color: #FFF9FF
+}
 
 .popColorDark {
     color: #0026D5

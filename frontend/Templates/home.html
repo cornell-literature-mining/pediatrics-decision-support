@@ -1,50 +1,43 @@
 {% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  {% block head %}
+    {% block head %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLR</title>
     {{ super() }}
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel= "stylesheet" type= "text/css" href= {{ url_for('static',filename='home.css') }}>
+    <link rel="stylesheet" type="text/css" href={{ url_for('static',filename='home.css') }}>
     {% endblock %}
 </head>
 
 {% block content %}
 <body class='mdc-theme--primary-bg mdc-theme--on-primary mdc-theme--surface'>
-  {{ super() }}
-  <section class='searchfield'>
-  <i class="material-icons" id= "homeIcon">biotech</i>
-  <form action='search' method='POST'>
-    <label class="mdc-text-field mdc-text-field--filled population">
-      <span class="mdc-text-field__ripple"></span>
-      <input type="text" class="mdc-text-field__input" name="population">
-      <span class="mdc-floating-label" id="population-label">Population of interest</span>
-      <span class="mdc-line-ripple"></span>
-    </label>
-  <div>
-    <label class="mdc-text-field mdc-text-field--filled intervention">
-      <span class="mdc-text-field__ripple"></span>
-      <input type="text" class="mdc-text-field__input" aria-labelledby="intervention-label" name="others">
-      <span class="mdc-floating-label" id="intervention-label">Intervention and outcomes of interest</span>
-      <span class="mdc-line-ripple"></span>
-    </label>
-  </div>
-  <div class="button-container">
-      <button type="submit" class="mdc-button submit">
-          <div class="mdc-button__ripple"></div>
-          <span class="mdc-button__label mdc-theme--on-primary" >
-          Search
-          </span>
-      </button>
-  </div>
-  </form>
-  </section>
-  {% endblock %}
+    {{ super() }}
+    <section class='searchfield'>
+        <i class="material-icons" id="homeIcon">biotech</i>
+        <form action='search' method='POST'>
+            <label class="mdc-text-field mdc-text-field--full-width mdc-text-field--no-label population" style="background-color:white;height:56px">
+                <input type="text" class="mdc-text-field__input" style="margin-top:14px" aria-labelledby="population-label" name="population" placeholder="Population of interest">
+            </label>
+            <div>
+                <label class="mdc-text-field mdc-text-field--full-width mdc-text-field--no-label intervention" style="background-color:white;height:56px">
+                    <input type="text" class="mdc-text-field__input" style="margin-top:14px" aria-labelledby="intervention-label" name="others" placeholder="Intervention and outcomes of interest">
+                </label>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="mdc-button submit" style="width:100%">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label mdc-theme--on-primary">
+                        Search
+                    </span>
+                </button>
+            </div>
+        </form>
+    </section>
 </body>
+{% endblock %}
 
 </html>
