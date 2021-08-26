@@ -11,8 +11,10 @@
 
     {{ super() }}
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel='stylesheet' href={{ url_for('static',filename='search.css') }}>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     {% endblock %}
 </head>
 
@@ -31,13 +33,13 @@
                     </a>
                     <label class="mdc-text-field mdc-text-field--filled population">
                         <span class="mdc-text-field__ripple"></span>
-                        <input type="text" class="mdc-text-field__input" aria-labelledby="population-label" name="username">
+                        <input type="text" class="mdc-text-field__input" aria-labelledby="population-label" name="population">
                         <span class="mdc-floating-label" id="population-label">Population of interest</span>
                         <span class="mdc-line-ripple"></span>
                     </label>
                     <label class="mdc-text-field mdc-text-field--filled intervention">
                         <span class="mdc-text-field__ripple"></span>
-                        <input type="text" class="mdc-text-field__input" aria-labelledby="intervention-label" name="username">
+                        <input type="text" class="mdc-text-field__input" aria-labelledby="intervention-label" name="others">
                         <span class="mdc-floating-label" id="intervention-label">Intervention and outcomes of interest</span>
                         <span class="mdc-line-ripple"></span>
                     </label>
@@ -98,33 +100,45 @@
 
         <hr>
         {% for abstract in abstracts %}
-        <div class="mdc-card mdc-card--outlined">
+        <div class="mdc-card mdc-card--raised">
             <h2 class='mdc-theme--on-surface'>{{ abstract['Title'] }}</h2>
             <span>{{ abstract['Content'] }}</span>
             <div class="row">
-                <div class="column" style="background-color:lightblue;height:100%">
-                    <h3>Population</h3>
-                    {% for p in abstract['Population'] %}
-                    <li>
-                        {{ p }}
-                    </li>
-                    {% endfor %}
+                <div class="column" style="height:100%">
+                    <div class="mdc-elevation--z1 popColorLightBG pioCard">
+                        <h3 class="popColorDark">Population</h3>
+                        <ul class="mdc-deprecated-list pioList">
+                            {% for p in abstract['Population'] %}
+                            <li class="mdc-deprecated-list-item popColorDarker">
+                                {{ p }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-                <div class="column" style="background-color:lightyellow;height:100%">
-                    <h3>Intervention</h3>
-                    {% for i in abstract['Intervention'] %}
-                    <li>
-                        {{ i }}
-                    </li>
-                    {% endfor %}
+                <div class="column" style="height:100%">
+                    <div class="mdc-elevation--z1 intColorLightBG pioCard">
+                        <h3 class="intColorDark">Intervention</h3>
+                        <ul class="mdc-deprecated-list pioList">
+                            {% for i in abstract['Intervention'] %}
+                            <li class="mdc-deprecated-list-item intColorDarker">
+                                {{ i }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-                <div class="column" style="background-color:violet;height:100%">
-                    <h3>Outcome</h3>
-                    {% for o in abstract['Outcome'] %}
-                    <li>
-                        {{ o }}
-                    </li>
-                    {% endfor %}
+                <div class="column" style="height:100%">
+                    <div class="mdc-elevation--z1 outColorLightBG pioCard">
+                        <h3 class="outColorDark">Outcome</h3>
+                        <ul class="mdc-deprecated-list pioList">
+                            {% for o in abstract['Outcome'] %}
+                            <li class="mdc-deprecated-list-item outColorDarker">
+                                {{ o }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

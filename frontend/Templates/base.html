@@ -9,12 +9,12 @@
     {% endblock %}
 </head>
 
-<body>
+<body class="mdc-typography" style="margin-left: 0px;margin-top: 0px;">
     {% block content %}
     <button type="button" class="sidebar_button mdc-icon-button material-icons" onclick="openNav()">menu</button>
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    </div>  
+    </div>
 
     <script>
         function openNav() {
