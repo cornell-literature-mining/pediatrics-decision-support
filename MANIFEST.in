@@ -1,0 +1,12 @@
+include app.py
+include frontend/*
+include frontend/static/*.css
+include frontend/templates/*.html
+include backend/*.py
+include backend/model_PIO_dropout_5epoch_entire.pth
+include backend/model_train.pth
+include backend/PIO_data_test.json
+include backend/PIO_data.pkl
+include backend/test_abstracts.json
+include backend/data_balance_test.json
+global-exclude *.pyc
