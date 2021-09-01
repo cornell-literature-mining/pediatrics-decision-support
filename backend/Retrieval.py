@@ -116,7 +116,7 @@ def test(dataset, model, batch_size=4):
             pred_label.append(pred.argmax(1).cpu().numpy())
 
     pred_label = np.concatenate(np.array(pred_label))
-    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==0]
+    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
     return pred_label, selected_abstracts
 
 
