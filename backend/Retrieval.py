@@ -91,7 +91,7 @@ def test_with_label(dataset, label, loss_fn, model, device, batch_size=4):
     correct /= size
     print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
     pred_label = np.concatenate(np.array(pred_label))
-    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==0]
+    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
     return pred_label, selected_abstracts
 
 def test(dataset, model, batch_size=4):
