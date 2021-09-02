@@ -31,6 +31,7 @@ def convert_PIO(output):
         target['Authors'] = data[1]
         target['Date'] = data[2]
         target['FullAbstract'] = data[3]
+        target['PMID'] = data[4]
         target['Population'] = pio[0]
         target['Intervention'] = pio[1]
         target['Outcome'] = pio[2]

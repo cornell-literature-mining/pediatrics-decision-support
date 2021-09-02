@@ -61,6 +61,10 @@
     overflow-y: auto;
 }
 
+.headerForecolor {
+    color: #6A6A6A;
+}
+
 /* Colors */
 
 .lightBGColor {
