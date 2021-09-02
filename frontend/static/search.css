@@ -23,6 +23,7 @@
 .mdc-card {
     margin: 30px;
     width: 90%;
+    padding: 16px;
     /* height: 225px; */
 }
 

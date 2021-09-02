@@ -11,11 +11,21 @@
 
     {{ super() }}
     <link rel='stylesheet' href={{ url_for('static',filename='search.css') }}>
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js">
+        import {
+            MDCRipple
+        } from '@material/ripple';
+
+        const selector = '.mdc-button, .mdc-icon-button, .mdc-card__primary-action';
+        const ripples = [].map.call(document.querySelectorAll(selector), function(el) {
+            return new MDCRipple(el);
+        });
+    </script>
     {% endblock %}
 </head>
 
 {% block content %}
+
 <body class="mdc-typography" style="margin-left: 0px;margin-top: 0px;">
 
     <header class=" mdc-top-app-bar mdc-top-app-bar--prominent mdc-top-app-bar--dense ">
@@ -84,58 +94,74 @@
         </section>
     </header>
 
-    <div class='reviewArticles mdc-top-app-bar--dense-prominent-fixed-adjust lightBGColor'>
+    <div class='reviewArticles mdc-top-app-bar--dense-prominent-fixed-adjust'>
         <div>
             <h2 class='mdc-theme--on-surface'>Searcing for {{ search[0] }} {{ search[1] }}</h2>
         </div>
-
-        <hr>
-        {% for abstract in abstracts %}
-        <div class="mdc-card mdc-card--raised">
-            <h2 class='mdc-theme--on-surface' style="margin-left:20px">{{ abstract['Title'] }}</h2>
-            <span style="margin-left:20px">{{ abstract['Content'] }}</span>
-            <div class="row">
-                <div class="column" style="height:100%">
-                    <div class="mdc-elevation--z1 popColorLightBG pioCard">
-                        <h3 class="popColorDark">Population</h3>
-                        <ul class="mdc-deprecated-list pioList">
-                            {% for p in abstract['Population'] %}
-                            <li class="mdc-deprecated-list-item popColorDarker">
-                                {{ p }}
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+        <div>
+            <hr>
+            {% for abstract in abstracts %}
+            <div class="mdc-card mdc-card--outlined">
+                <h2 class='mdc-theme--on-surface'>{{ abstract['Title'] }}</h2>
+                <p>
+                    {% for author in abstract['Authors'] %}
+                    {{ author }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ abstract['Date'] }}
+                </p>
+                <div class='button-container'>
+                    <button type="submit" class="mdc-button submit" name="view" value="{{ abstract }}">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label mdc-theme--on-primary">
+                            View full abstract
+                        </span>
+                    </button>
                 </div>
-                <div class="column" style="height:100%">
-                    <div class="mdc-elevation--z1 intColorLightBG pioCard">
-                        <h3 class="intColorDark">Intervention</h3>
-                        <ul class="mdc-deprecated-list pioList">
-                            {% for i in abstract['Intervention'] %}
-                            <li class="mdc-deprecated-list-item intColorDarker">
-                                {{ i }}
-                            </li>
-                            {% endfor %}
-                        </ul>
+                <div class="row">
+                    <div class="column" style="height:100%">
+                        <div class="mdc-elevation--z1 popColorLightBG pioCard">
+                            <h3 class="popColorDark">Population</h3>
+                            <ul class="mdc-deprecated-list pioList">
+                                {% for p in abstract['Population'] %}
+                                <li class="mdc-deprecated-list-item popColorDarker">
+                                    {{ p }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="column" style="height:100%">
-                    <div class="mdc-elevation--z1 outColorLightBG pioCard">
-                        <h3 class="outColorDark">Outcome</h3>
-                        <ul class="mdc-deprecated-list pioList">
-                            {% for o in abstract['Outcome'] %}
-                            <li class="mdc-deprecated-list-item outColorDarker">
-                                {{ o }}
-                            </li>
-                            {% endfor %}
-                        </ul>
+                    <div class="column" style="height:100%">
+                        <div class="mdc-elevation--z1 intColorLightBG pioCard">
+                            <h3 class="intColorDark">Intervention</h3>
+                            <ul class="mdc-deprecated-list pioList">
+                                {% for i in abstract['Intervention'] %}
+                                <li class="mdc-deprecated-list-item intColorDarker">
+                                    {{ i }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column" style="height:100%">
+                        <div class="mdc-elevation--z1 outColorLightBG pioCard">
+                            <h3 class="outColorDark">Outcome</h3>
+                            <ul class="mdc-deprecated-list pioList">
+                                {% for o in abstract['Outcome'] %}
+                                <li class="mdc-deprecated-list-item outColorDarker">
+                                    {{ o }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% if not loop.last %}
+            {% endif %}
+            {% endfor %}
         </div>
-        {% if not loop.last %}
-        {% endif %}
-        {% endfor %}
     </div>
 
     <script>
