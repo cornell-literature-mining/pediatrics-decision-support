@@ -111,14 +111,16 @@
                 <p>
                     {{ abstract['Date'] }}
                 </p>
-                <div class='button-container'>
-                    <button type="submit" class="mdc-button submit" name="view" value="{{ abstract }}">
-                        <div class="mdc-button__ripple"></div>
-                        <span class="mdc-button__label mdc-theme--on-primary">
-                            View full abstract
-                        </span>
-                    </button>
-                </div>
+                <form action='view' method='POST'>
+                    <div class='button-container'>
+                        <button type="submit" class="mdc-button submit" name="view" value="{{ abstract }}">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mdc-theme--on-surface">
+                                View full abstract
+                            </span>
+                        </button>
+                    </div>
+                </form>
                 <div class="row">
                     <div class="column" style="height:100%">
                         <div class="mdc-elevation--z1 popColorLightBG pioCard">

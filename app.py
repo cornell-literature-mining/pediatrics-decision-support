@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for
 from backend import Retrieve_PIO as rPIO
 import os
+import json
 
 template_dir = os.path.abspath('frontend/templates')
 static_dir = os.path.abspath('frontend/static')
@@ -40,9 +41,23 @@ def convert_PIO(output):
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
+        population = request.form.get('population')
+        others = request.form.get('others')
+        output = TEMP_OUTPUT# rPIO.get_PIO(population, others)
+        print("\n\n=== OUTPUT ===\n\n" + str(output))
+        return render_template('search.html', abstracts=convert_PIO(output), search=[population, others])
+    else:
+        return render_template('home.html')
+
+
+@app.route('/view', methods=['GET', 'POST'])
+def view():
+    if request.method == 'POST':
         if 'view' in request.form:
             abstract = request.form.get('view')
-            return render_template('view.html', abstract=abstract)
+            abstract = json.loads(abstract.replace("'", '"'))
+            print(abstract)
+            return render_template('view.html', abstract=abstract, test="Hello world!")
         else:
             population = request.form.get('population')
             others = request.form.get('others')
