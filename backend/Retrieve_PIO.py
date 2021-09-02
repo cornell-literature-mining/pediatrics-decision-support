@@ -1,13 +1,12 @@
 import json
-from . import Retrieval as ret
-from . import extract_PIO_elements as xPIO
-from . import File_loading as fl
+import Retrieval as ret
+import extract_PIO_elements as xPIO
 
 def create_ret_input(population, others):
     pop_tag = "P"
     Q = pop_tag + " " + population + " " + pop_tag + " " + others
     #print(Q)
-    with fl.Open('test_abstracts.json', 'r') as json_file:
+    with open('test_abstracts.json', 'r') as json_file:
         database_abstracts = json.load(json_file)
     size = len(database_abstracts)
     retrieval_input = [0 for element in range(size)]
@@ -24,15 +23,40 @@ def PIO(selected_abstracts):
         #print(output_PIO[i])
     return output_PIO
 
-def get_PIO(population, others):
-    # TODO: include the abstract itself (including the title too would be good as well) in addition to the PIO lists
-    # Assumed format: lsit of "[Content (string), P list (list), I list (list), O list (list)]
+def find_entry(selected_abstract):
+    with open('database_info.json', 'r') as json_file:
+        database_info = json.load(json_file)
 
-    # Commenting out as it doesn't work on my PC:
+    with open('PIO_data_PMID_abstracts.json', 'r') as json_file:
+        database_abstracts = json.load(json_file)
+
+    size_database = len(database_abstracts)
+
+    for j in range(size_database):
+        if selected_abstract == database_abstracts[j]:
+            print("found match")
+            index = j
+            break
+
+    return database_info[j]
+
+def find_info(selected_abstracts):
+    size = len(selected_abstracts)
+    selected_abstracts_info = [0 for element in range(size)]
+    info = []
+    for i in range(size):
+        info.append(find_entry(selected_abstracts[i]))
+    return info
+
+
+def get_PIO(population, others):
     retrieval_input = create_ret_input(population, others)
     selected_abstracts = ret.retrieval(retrieval_input)
+    #print("there are:",len(selected_abstracts),"selected abstracts")
+    selected_abstracts_info = find_info(selected_abstracts) #[title,authors_list,year,abstract,pmid]
+    #print("there are:",len(selected_abstracts_info),"selected infos")
+    print(selected_abstracts_info[0])
     output_PIO = PIO(selected_abstracts)
+    return output_PIO,selected_abstracts_info
 
-    # Temp output - delete once the NVIDIA GPU problem is sorted out
-    #output_PIO = [["Humans need food and water in order to stay healthy.", ["Humans"], ["Food", "Water"], ["Healthy"]], ["Cats need pets in order to stay happy. This is a different content.", ["Cats"], ["Pets"], ["Happy"]]]
-    return output_PIO
+#get_PIO("men", "health")
