@@ -7,12 +7,18 @@ def create_ret_input(population, others):
     pop_tag = "P"
     Q = pop_tag + " " + population + " " + pop_tag + " " + others
     #print(Q)
-    with fl.Open('test_abstracts.json', 'r') as json_file:
-        database_abstracts = json.load(json_file)
-    size = len(database_abstracts)
-    retrieval_input = [0 for element in range(size)]
+    with fl.Open('PIO_data_PMID_abstracts.json', 'r') as f:
+        PMID_abstracts = json.load(f)
+    size = 57
+    abstracts = [0 for element in range(size)]
+    PMID = [0 for element in range(size)]
     for i in range(size):
-        retrieval_input[i] = [Q, database_abstracts[i]]
+      abstracts[i] = PMID_abstracts[i][1]
+      PMID[i] = PMID_abstracts[i][0]
+    retrieval_input_p1 = [0 for element in range(size)]
+    for i in range(size):
+        retrieval_input_p1[i] = [Q, abstracts[i]]
+    retrieval_input = [retrieval_input_p1,PMID]
     return retrieval_input
 
 def PIO(selected_abstracts):
@@ -24,40 +30,41 @@ def PIO(selected_abstracts):
         #print(output_PIO[i])
     return output_PIO
 
-def find_entry(selected_abstract):
+def find_entry(pmid):
     with fl.Open('database_info.json', 'r') as json_file:
         database_info = json.load(json_file)
 
-    with fl.Open('PIO_data_PMID_abstracts.json', 'r') as json_file:
-        database_abstracts = json.load(json_file)
-
-    size_database = len(database_abstracts)
+    size_database = len(database_info)
+    index = 0
 
     for j in range(size_database):
-        if selected_abstract == database_abstracts[j]:
+        if pmid == database_info [j][4]:
             print("found match")
             index = j
             break
 
-    return database_info[j]
+    return database_info[index]
 
-def find_info(selected_abstracts):
-    size = len(selected_abstracts)
-    selected_abstracts_info = [0 for element in range(size)]
+def find_info(pmids_selected_abstracts):
+    size = len(pmids_selected_abstracts)
     info = []
     for i in range(size):
-        info.append(find_entry(selected_abstracts[i]))
+        info.append(find_entry(pmids_selected_abstracts[i]))
     return info
 
+def update_info(selected_abstracts_info,selected_abstracts):
+    size = len(selected_abstracts)
+    for i in range(size):
+        selected_abstracts_info[i][3] = selected_abstracts[i]
+    return selected_abstracts_info
 
 def get_PIO(population, others):
     retrieval_input = create_ret_input(population, others)
-    selected_abstracts = ret.retrieval(retrieval_input)
+    selected_abstracts,selected_pmids = ret.retrieval(retrieval_input)
     #print("there are:",len(selected_abstracts),"selected abstracts")
-    selected_abstracts_info = find_info(selected_abstracts) #[title,authors_list,year,abstract,pmid]
+    #print("there are:",len(selected_pmids),"selected pmids")
+    selected_abstracts_info = find_info(selected_pmids) #[title,authors_list,year,abstract,pmid]
+    updated_selected_abstracts_info = update_info(selected_abstracts_info,selected_abstracts)
     #print("there are:",len(selected_abstracts_info),"selected infos")
-    print(selected_abstracts_info[0])
     output_PIO = PIO(selected_abstracts)
-    return output_PIO,selected_abstracts_info
-
-#get_PIO("men", "health")
+    return output_PIO,updated_selected_abstracts_info

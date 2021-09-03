@@ -8,7 +8,6 @@ import torch.nn.functional as F
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from torch.utils.data import DataLoader
 import numpy as np
-from . import File_loading as fl
 
 
 # tokenizer = AutoTokenizer.from_pretrained("emilyalsentzer/Bio_ClinicalBERT")
@@ -91,10 +90,12 @@ def test_with_label(dataset, label, loss_fn, model, device, batch_size=4):
     correct /= size
     print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
     pred_label = np.concatenate(np.array(pred_label))
-    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==0]
+    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
     return pred_label, selected_abstracts
 
-def test(dataset, model, batch_size=4):
+def test(test_dataset, model, batch_size=4):
+    dataset = test_dataset[0]
+    pmids = test_dataset[1]
     size = len(dataset)
     model.eval()
     test_loss, correct = 0, 0
@@ -116,8 +117,11 @@ def test(dataset, model, batch_size=4):
             pred_label.append(pred.argmax(1).cpu().numpy())
 
     pred_label = np.concatenate(np.array(pred_label))
-    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==0]
-    return pred_label, selected_abstracts
+    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
+    print("found abstracts")
+    selected_pmids = [pmids[idx] for idx,_ in enumerate(pred_label) if pred_label[idx] == 1]
+    print("found pmids")
+    return pred_label, selected_abstracts,selected_pmids
 
 
 def retrieval(test_data):
@@ -125,7 +129,7 @@ def retrieval(test_data):
     # batch_size = 5  # 16
     # num_epochs = 5
     # Get cpu or gpu device for training.
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = "cpu"
     print("Using {} device".format(device))
 
     # load data, each dataset (data_balance_test.json, data_balance_vali.json, data_balance_train.json) is a dict
@@ -165,21 +169,21 @@ def retrieval(test_data):
     # load saved model parameters trained by the training data from the train reviews.
     # "model_test.pth" is trained from the training data from testing reviews
     # "model_train.pth" is trained from the training data from training reviews
-    model.load_state_dict(torch.load("./backend/model_train.pth",  map_location=torch.device(device)))
+    model.load_state_dict(torch.load("./backend/model_train.pth", map_location=torch.device(device)))
 
     # test model on testing data
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)
-    pred_label, selected_abstracts = test(test_data, model)
+    pred_label, selected_abstracts,selected_pmids = test(test_data, model)
 
     # time_end = time.time()
     # print('time cost', (time_end - time_start)/60, 'min')
 
     # print('done!')
-    return selected_abstracts
+    return selected_abstracts,selected_pmids
 
 if __name__ == '__main__':
     # load data where test_data is the list of [query, abstract]
-    with open('data_balance_test.json', 'r') as json_file:  # testing data
+    with open('PIO_data_PMID_abstracts.json', 'r') as json_file:  # testing data
         data_dict_test = json.load(json_file)
     test_data = data_dict_test['test_data']
 
