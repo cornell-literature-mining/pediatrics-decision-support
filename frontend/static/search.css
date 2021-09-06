@@ -65,6 +65,14 @@
     color: #6A6A6A;
 }
 
+.content {
+  display: none;
+}
+
+.content--active {
+  display: block;
+}
+
 /* Colors */
 
 .lightBGColor {
