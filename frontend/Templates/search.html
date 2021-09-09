@@ -12,7 +12,7 @@
     {{ super() }}
     <link rel='stylesheet' href={{ url_for('static',filename='search.css') }}>
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <script src={{ url_for('static',filename='search.js') }}></script>
+    <script src={{ url_for('static',filename='search.js') }} type="module"></script>
     {% endblock %}
 </head>
 
@@ -87,13 +87,13 @@
             </div>
         </section>
         <section>
-            <div class="mdc-tab-bar" role="tablist">
+            <div class="mdc-tab-bar" role="tablist" style="background-color:#FFF9FF">
                 <div class="mdc-tab-scroller">
                     <div class="mdc-tab-scroller__scroll-area">
                         <div class="mdc-tab-scroller__scroll-content">
                             <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
                                 <span class="mdc-tab__content">
-                                    <span class="mdc-tab__text-label">One</span>
+                                    <span class="mdc-tab__text-label">Review Articles</span>
                                 </span>
                                 <span class="mdc-tab-indicator mdc-tab-indicator--active">
                                     <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
@@ -102,7 +102,7 @@
                             </button>
                             <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
                                 <span class="mdc-tab__content">
-                                    <span class="mdc-tab__text-label">Two</span>
+                                    <span class="mdc-tab__text-label">Controlled Trials</span>
                                 </span>
                                 <span class="mdc-tab-indicator mdc-tab-indicator">
                                     <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
@@ -111,7 +111,7 @@
                             </button>
                             <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
                                 <span class="mdc-tab__content">
-                                    <span class="mdc-tab__text-label">Three</span>
+                                    <span class="mdc-tab__text-label">Cohort Study and Case Study</span>
                                 </span>
                                 <span class="mdc-tab-indicator mdc-tab-indicator">
                                     <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
@@ -124,8 +124,9 @@
             </div>
         </section>
     </header>
+        <br>
 
-    <div class='reviewArticles mdc-top-app-bar--dense-prominent-fixed-adjust'>
+    <div class='content content--active reviewArticles mdc-top-app-bar--dense-prominent-fixed-adjust'>
         <div>
             <h2 class='mdc-theme--on-surface'>Searcing for {{ search[0] }} {{ search[1] }}</h2>
         </div>
@@ -199,9 +200,6 @@
         </div>
     </div>
 
-    <div class="content content--active">
-        <p>Content one</p>
-    </div>
     <div class="content">
         <p>Content two</p>
     </div>
