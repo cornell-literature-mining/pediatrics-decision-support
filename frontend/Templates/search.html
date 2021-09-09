@@ -141,6 +141,31 @@
                     {% endfor %}
                     <br>
                     {{ abstract['Date'] }}
+                    <br>
+                    <p>
+                        <b class="popColorDark">Population:</b>
+                        <span class="popColorDarker">
+                            {% for p in abstract['Population'] %}
+                            {{ p }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </span>
+                    </p>
+                    <p>
+                        <b class="intColorDark">Intervention:</b>
+                        <span class="intColorDarker">
+                            {% for i in abstract['Intervention'] %}
+                            {{ i }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </span>
+                    </p>
+                    <p>
+                        <b class="outColorDark">Outcome:</b>
+                        <span class="outColorDarker">
+                            {% for o in abstract['Outcome'] %}
+                            {{ o }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </span>
+                    </p>
                 </div>
                 <!--
                 <div class="row">
