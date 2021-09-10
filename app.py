@@ -38,7 +38,6 @@ def convert_PIO(output):
         result.append(target)
     return result
 
-
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -46,7 +45,27 @@ def search():
         others = request.form.get('others')
         output = TEMP_OUTPUT# rPIO.get_PIO(population, others)
         print("\n\n=== OUTPUT ===\n\n" + str(output))
-        return render_template('search.html', abstracts=convert_PIO(output), search=[population, others])
+        output = convert_PIO(output)
+        return render_template('search.html', abstracts=output, search=[population, others])
+    else:
+        return render_template('home.html')
+
+@app.route('/search2', methods=['GET', 'POST'])
+def search2():
+    if True:# request.method == 'POST':
+        population = request.form.get('population')
+        others = request.form.get('others')
+        output = TEMP_OUTPUT# rPIO.get_PIO(population, others)
+        print("\n\n=== OUTPUT ===\n\n" + str(output))
+        output = convert_PIO(output)
+        output2 = {}
+        for abstract in output:
+            for out in abstract['Outcome']:
+                if out in output2.keys():
+                    output2[out].append(abstract)
+                else:
+                    output2[out] = [abstract]
+        return render_template('search2.html', factors=output2, search=[population, others])
     else:
         return render_template('home.html')
 
