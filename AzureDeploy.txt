@@ -1,0 +1,10 @@
+1. Create an app named "literature-mining" with Python 3.7
+
+2. In the app's Configuration -> Application Settings, add SCM_DO_BUILD_DURING_DEPLOYMENT = true
+
+3. Navigate to the repo
+
+4. Enter in CMD:
+az login
+az account set --subscription "COECIS Info Science Yang"
+az webapp up --name literature-mining
