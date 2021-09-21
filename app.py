@@ -3,8 +3,8 @@ from backend import Retrieve_PIO as rPIO
 import os
 import json
 
-template_dir = os.path.abspath('frontend/templates')
-static_dir = os.path.abspath('frontend/static')
+template_dir = 'frontend/templates'
+static_dir = 'frontend/static'
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
 
