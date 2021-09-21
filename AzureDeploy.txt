@@ -1,3 +1,5 @@
+WebApp:
+
 1. Create an app named "literature-mining" with Python 3.7
 
 2. In the app's Configuration -> Application Settings, add SCM_DO_BUILD_DURING_DEPLOYMENT = true
@@ -8,3 +10,26 @@
 az login
 az account set --subscription "COECIS Info Science Yang"
 az webapp up --name literature-mining
+
+============
+
+Linux VM:
+
+1. Create an Ubuntu virtual machine in Azure, with a username and password.
+
+2. In Networking -> Inbound port rules, add a rule with cusom port 5000, Protocol TCP, Source Any, Destination Any, Action Allow.
+
+3. Enter in CMD (replace with the VM's IP address if it's different):
+ssh literture-mining@40.76.202.18
+
+4. Enter the username and password.
+
+5. Enter the following bash commands:
+sudo apt update
+sudo apt install python3-pip
+git clone https://github.com/cornell-literature-mining/pediatrics-decision-support
+cd pediatrics-decision-support/
+pip install -r requirements.txt
+sudo apt install python3-flask
+flask run --host=0.0.0.0
+
