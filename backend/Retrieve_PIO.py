@@ -9,7 +9,7 @@ def create_ret_input(population, others):
     #print(Q)
     with fl.Open('PIO_data_PMID_abstracts.json', 'r') as f:
         PMID_abstracts = json.load(f)
-    size = 57 #len(PMID_abstracts)
+    size = len(PMID_abstracts)
     abstracts = [0 for element in range(size)]
     PMID = [0 for element in range(size)]
     for i in range(size):
