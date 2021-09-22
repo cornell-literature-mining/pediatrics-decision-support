@@ -1,0 +1,17 @@
+additional_properties: {}
+apiVersion: '2019-12-01'
+name: gpucontainergroup
+properties:
+  containers:
+  - name: gpucontainer
+    properties:
+      image: k8s-gcrio.azureedge.net/cuda-vector-add:v0.1
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+          gpu:
+            count: 1
+            sku: K80
+  osType: Linux
+  restartPolicy: OnFailure
