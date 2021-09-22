@@ -25,11 +25,23 @@ ssh literture-mining@40.76.202.18
 4. Enter the username and password.
 
 5. Enter the following bash commands:
+
+5.1. Download pip:
 sudo apt update
 sudo apt install python3-pip
+
+5.2. Download the repo:
 git clone https://github.com/cornell-literature-mining/pediatrics-decision-support
 cd pediatrics-decision-support/
 pip install -r requirements.txt
 sudo apt install python3-flask
-flask run --host=0.0.0.0
 
+5.3. Download the ML data:
+pip install gdown
+export PATH="/home/literture-mining/.local/bin:$PATH"
+gdown https://drive.google.com/uc?id=1zpm1Z9CV5vtZdXRIRZuMxyH0dTfsB16F
+sudo apt install unzip
+unzip MLData.zip -d backend
+
+5.4. Run:
+flask run --host=0.0.0.0

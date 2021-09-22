@@ -51,7 +51,7 @@ def search():
     if request.method == 'POST':
         population = request.form.get('population')
         others = request.form.get('others')
-        output = TEMP_OUTPUT #rPIO.get_PIO(population, others)
+        output = rPIO.get_PIO(population, others) # TEMP_OUTPUT #
         print("\n\n=== OUTPUT ===\n\n" + str(output))
         output = convert_PIO(output)
         # Find similar words in MeSH

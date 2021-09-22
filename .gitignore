@@ -127,8 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-backend/PIO_data_test.json
+
+# Large files
 backend/PIO_data.pkl
 backend/model_train.pth
 backend/model_PIO_dropout_5epoch_entire.pth
-frontend/Tests
