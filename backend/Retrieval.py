@@ -125,60 +125,23 @@ def test(test_dataset, model, batch_size=4):
 
 
 def retrieval(test_data):
-    # time_start = time.time()
-    # batch_size = 5  # 16
-    # num_epochs = 5
     # Get cpu or gpu device for training.
-    device = "cpu"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
-
-    # load data, each dataset (data_balance_test.json, data_balance_vali.json, data_balance_train.json) is a dict
-    # including train_data, train_label, test_data, test_label
-    # with open('data_balance_train.json', 'r') as json_file:  # training data
-    #     data_dict_train = json.load(json_file)
-
-    # with open('data_balance_test.json', 'r') as json_file:  # testing data
-    #     data_dict_test = json.load(json_file)
-
-    # [query, abstract1] 1
-    # [query, abstract2] 0
-    # abstracts " bla bla bla "
-
-    # train_data = data_dict_train['train_data']
-    # train_label = data_dict_train['train_label']
-
-    # test_data = data_dict_test['test_data']
-    # test_label = data_dict_test['test_label']
 
     # Initialize the model
     model = NeuralNetwork(device).to(device)
-
-    # define loss function and optimizer
-    # loss_fn = nn.CrossEntropyLoss()
-    # optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
-    # optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-
-    # train the model
-    # train(train_data, train_label, model, loss_fn, optimizer, device, batch_size, num_epochs)
-
-    # save model
-    # torch.save(model.state_dict(), "model_train.pth")
-    # print("Saved PyTorch Model State to model_train.pth")
 
     # load model
     # load saved model parameters trained by the training data from the train reviews.
     # "model_test.pth" is trained from the training data from testing reviews
     # "model_train.pth" is trained from the training data from training reviews
-    model.load_state_dict(torch.load("./backend/model_train.pth", map_location=torch.device(device)))
+    model.load_state_dict(torch.load("Retrieval_model1.0.pth"))
 
     # test model on testing data
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)
     pred_label, selected_abstracts,selected_pmids = test(test_data, model)
 
-    # time_end = time.time()
-    # print('time cost', (time_end - time_start)/60, 'min')
-
-    # print('done!')
     return selected_abstracts,selected_pmids
 
 if __name__ == '__main__':
