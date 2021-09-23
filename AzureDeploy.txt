@@ -20,7 +20,7 @@ Linux VM:
 2. In Networking -> Inbound port rules, add a rule with cusom port 5000, Protocol TCP, Source Any, Destination Any, Action Allow.
 
 3. Enter in CMD (replace with the VM's IP address if it's different):
-ssh literture-mining@40.76.202.18
+ssh literature-mining@40.76.202.18
 
 4. Enter the username and password.
 
@@ -39,9 +39,13 @@ sudo apt install python3-flask
 5.3. Download the ML data:
 pip install gdown
 export PATH="/home/literture-mining/.local/bin:$PATH"
-gdown https://drive.google.com/uc?id=1zpm1Z9CV5vtZdXRIRZuMxyH0dTfsB16F
+gdown https://drive.google.com/uc?id=1n-zHxgylAG4NDGelQoUCs1CAFtUKx1cV
 sudo apt install unzip
 unzip MLData.zip -d backend
 
 5.4. Run:
 flask run --host=0.0.0.0
+
+--- Old ---
+
+gdown https://drive.google.com/uc?id=1zpm1Z9CV5vtZdXRIRZuMxyH0dTfsB16F

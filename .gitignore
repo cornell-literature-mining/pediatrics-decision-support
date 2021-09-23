@@ -132,3 +132,4 @@ dmypy.json
 backend/PIO_data.pkl
 backend/model_train.pth
 backend/model_PIO_dropout_5epoch_entire.pth
+backend/Retrieval_model1.0.pth
