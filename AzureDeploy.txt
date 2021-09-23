@@ -38,10 +38,10 @@ sudo apt install python3-flask
 
 5.3. Download the ML data:
 pip install gdown
-export PATH="/home/literture-mining/.local/bin:$PATH"
+export PATH="/home/literature-mining/.local/bin:$PATH"
 gdown https://drive.google.com/uc?id=1n-zHxgylAG4NDGelQoUCs1CAFtUKx1cV
 sudo apt install unzip
-unzip MLData.zip -d backend
+unzip MLData1.zip -d backend
 
 5.4. Run:
 flask run --host=0.0.0.0

@@ -126,7 +126,7 @@ def test(test_dataset, model, batch_size=4):
 
 def retrieval(test_data):
     # Get cpu or gpu device for training.
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = "cuda"
     print("Using {} device".format(device))
 
     # Initialize the model
