@@ -126,7 +126,7 @@ def test(test_dataset, model, batch_size=4):
 
 def retrieval(test_data):
     # Get cpu or gpu device for training.
-    device = "cuda"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
 
     # Initialize the model
@@ -136,7 +136,7 @@ def retrieval(test_data):
     # load saved model parameters trained by the training data from the train reviews.
     # "model_test.pth" is trained from the training data from testing reviews
     # "model_train.pth" is trained from the training data from training reviews
-    model.load_state_dict(torch.load("./backend/Retrieval_model1.0.pth", map_location=torch.device(device)))
+    model.load_state_dict(torch.load("./backend/Retrieval_model1.0_new.pth", map_location=torch.device(device)))
 
     # test model on testing data
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)
