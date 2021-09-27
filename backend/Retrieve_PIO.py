@@ -1,5 +1,6 @@
 import json
 from . import Retrieval as ret
+from . import Retrieval_contrastive as ret_c
 from . import extract_PIO_elements as xPIO
 from . import File_loading as fl
 
@@ -63,6 +64,16 @@ def get_PIO(population, others):
     selected_abstracts,selected_pmids = ret.retrieval(retrieval_input)
     #print("there are:",len(selected_abstracts),"selected abstracts")
     #print("there are:",len(selected_pmids),"selected pmids")
+    selected_abstracts_info = find_info(selected_pmids) #[title,authors_list,year,abstract,pmid]
+    updated_selected_abstracts_info = update_info(selected_abstracts_info,selected_abstracts)
+    #print("there are:",len(selected_abstracts_info),"selected infos")
+    output_PIO = PIO(selected_abstracts)
+    return output_PIO,updated_selected_abstracts_info
+
+def get_PIO_contrastive(population, others):
+    pop_tag = "P"
+    Q = pop_tag + " " + population + " " + pop_tag + " " + others
+    selected_abstracts, selected_pmids = ret_c.retrieval_with_one_query(Q)
     selected_abstracts_info = find_info(selected_pmids) #[title,authors_list,year,abstract,pmid]
     updated_selected_abstracts_info = update_info(selected_abstracts_info,selected_abstracts)
     #print("there are:",len(selected_abstracts_info),"selected infos")
