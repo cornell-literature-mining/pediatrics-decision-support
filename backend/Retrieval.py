@@ -93,38 +93,84 @@ def test_with_label(dataset, label, loss_fn, model, device, batch_size=4):
     selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
     return pred_label, selected_abstracts
 
-def test(test_dataset, model, batch_size=4):
+# def test(test_dataset, model, batch_size=4):
+#     dataset = test_dataset[0]
+#     pmids = test_dataset[1]
+#     size = len(dataset)
+#     model.eval()
+#     test_loss, correct = 0, 0
+#     batch_num = int(size / batch_size)  # discard the decimals
+#     pred_label = []
+#     with torch.no_grad():
+#         for batch_index in range(batch_num):  # loop over the dataset batch by batch
+#             start = batch_index * batch_size
+#             X = dataset[start:(start + batch_size)]
+
+#             pred = model(X)
+#             pred_label.append(pred.argmax(1).cpu().numpy())
+
+#         if batch_index * batch_size < size:  # still some left
+#             start = (batch_index + 1) * batch_size
+#             X = dataset[start:]
+
+#             pred = model(X)
+#             pred_label.append(pred.argmax(1).cpu().numpy())
+
+#     pred_label = np.concatenate(np.array(pred_label))
+#     selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
+#     print("found abstracts")
+#     selected_pmids = [pmids[idx] for idx,_ in enumerate(pred_label) if pred_label[idx] == 1]
+#     print("found pmids")
+#     return pred_label, selected_abstracts,selected_pmids
+
+
+def test(test_dataset, model, batch_size=400):
+    print('retrieval batch size: {}'.format(batch_size))
     dataset = test_dataset[0]
     pmids = test_dataset[1]
     size = len(dataset)
     model.eval()
     test_loss, correct = 0, 0
     batch_num = int(size / batch_size)  # discard the decimals
+    print('batch num: {}'.format(batch_num))
     pred_label = []
+    confidence = []
     with torch.no_grad():
         for batch_index in range(batch_num):  # loop over the dataset batch by batch
+            print('batch index: {}'.format(batch_index))
             start = batch_index * batch_size
             X = dataset[start:(start + batch_size)]
 
             pred = model(X)
             pred_label.append(pred.argmax(1).cpu().numpy())
+            confidence.append(F.softmax(pred,dim=1).cpu().numpy().max(axis=1))
 
         if batch_index * batch_size < size:  # still some left
+            print('batch index: {}'.format(batch_index))
             start = (batch_index + 1) * batch_size
             X = dataset[start:]
 
             pred = model(X)
             pred_label.append(pred.argmax(1).cpu().numpy())
+            confidence.append(F.softmax(pred,dim=1).cpu().numpy().max(axis=1))
 
     pred_label = np.concatenate(np.array(pred_label))
-    selected_abstracts = [dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1]
-    print("found abstracts")
-    selected_pmids = [pmids[idx] for idx,_ in enumerate(pred_label) if pred_label[idx] == 1]
-    print("found pmids")
-    return pred_label, selected_abstracts,selected_pmids
+    confidence = np.concatenate(np.array(confidence))
 
+    selected_abstracts = np.array([dataset[idx][1] for idx, _ in enumerate(pred_label) if pred_label[idx]==1])
+    selected_confidence = np.array([confidence[idx] for idx, _ in enumerate(pred_label) if pred_label[idx]==1])
+
+    sorted_index = selected_confidence.argsort()[::-1]  # from big to small
+    selected_abstracts = selected_abstracts[sorted_index]
+
+    print("found abstracts")
+    selected_pmids = np.array([pmids[idx] for idx,_ in enumerate(pred_label) if pred_label[idx] == 1])
+    selected_pmids = selected_pmids[sorted_index]
+    print("found pmids")
+    return pred_label, selected_abstracts, selected_pmids
 
 def retrieval(test_data):
+    time_start = time.time()
     # Get cpu or gpu device for training.
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
@@ -141,14 +187,17 @@ def retrieval(test_data):
     # test model on testing data
     # pred_label, selected_abstracts = test_with_label(test_data, test_label, loss_fn, model, device, batch_size)
     pred_label, selected_abstracts,selected_pmids = test(test_data, model)
-
+    
+    time_end = time.time()
+    print('time cost', (time_end - time_start)/60, 'min')
     return selected_abstracts,selected_pmids
 
 if __name__ == '__main__':
     # load data where test_data is the list of [query, abstract]
-    with open('PIO_data_PMID_abstracts.json', 'r') as json_file:  # testing data
-        data_dict_test = json.load(json_file)
-    test_data = data_dict_test['test_data']
+#     with open('PIO_data_PMID_abstracts.json', 'r') as json_file:  # testing data
+#         data_dict_test = json.load(json_file)
+#     test_data = data_dict_test['test_data']
 
     # call the retrieval function with input "test_data" and you can get the selected abstracts
+    test_data = 'man cancer'
     selected_abstracts = retrieval(test_data)

@@ -343,7 +343,7 @@ def retrieval_with_one_query(Q):
     pmids = PMID_abstracts_embeddings[1]
     abstracts = PMID_abstracts_embeddings[2]
 
-    threshold = 0.91
+    threshold = 0.9
     sim = model(Q, embeddings)
     boo_result = (sim > threshold)
     pred_label = (boo_result[0] * 1).cpu().numpy()
