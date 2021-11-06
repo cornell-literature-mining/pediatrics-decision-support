@@ -43,6 +43,12 @@ gdown https://drive.google.com/uc?id=1n-zHxgylAG4NDGelQoUCs1CAFtUKx1cV
 sudo apt install unzip
 unzip MLData1.zip -d backend
 
+For retrieval.py (rather than retrieval_contrastive.py), we need the following four files:
+model_PIO_dropout_5epoch_entire.pth
+database_info.json
+PIO_data_PMID_abstracts.json
+Retrieval_model1.0_new.pth
+
 5.4. Run:
 flask run --host=0.0.0.0
 
