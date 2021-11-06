@@ -1,5 +1,5 @@
 Flask
-transformers
+transformers==4.6.0
 torch
 numpy
 tqdm
